@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JS_Part11</title>
+        <link rel="stylesheet" href="./index.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <forms>
+            <div id="container">
+                <h1 id="title">Lista de Produtos</h1>
+                <div id="container2">
+                    Nome do produto: <input type="text" id="nome"> 
+                    <textarea id="descricao" rows="6" cols="20" placeholder="Descrição"></textarea>
+                    Valor: <input type="text" id="valor">
+                </div>
+                <div>
+                    <button  id="botaoIncluir">Incluir produtos</button>
+                    <button id="botaoListar">Listar produtos</button>
+                    <!-- <input type="button" id="incluir" value="Incluir produto">
+                    <input type="button" id="listar" value="Listar produto"> -->
+                </div>
+                <h3></h3>
+                <table border="1">
+                    <thead>
+                        <th>ID</th>
+                        <th id="nomeTitulo">Produto</th>
+                        <th id="valorTitulo">Valor</th>
+                        <th>Editar</th>
+                        <th>Apagar</th>
+                    </thead>
+                    <tbody id="tabela">
+                    </tbody>
+                </table>
+                <section id="popup">
+                    <span id="fechar">x</span>
+                    <div id="tabelaPopup">           
+                        <p id="subtitle">Altere as informações:<p>
+                        <p>Nome do produto: <input type="text" id="nomeEdit"></p>
+                        <p>Descrição:</p><textarea id="descricaoEdit" rows="6" cols="20"></textarea>
+                        <p>Valor: <input type="text" id="valorEdit"></p>
+                        <button id="botaoEditar">Confirmar</button>
+                        <h4></h4>
+                    </div>
+                </section>
+                <section id="popupInfos">
+                    <span id="fechar2">x</span>
+                    <h2>Dados do produto:</h2>
+                    <div id="listaPopup">           
+                        <p>ID: <i id="infoID"> </i></p>
+                        <p>Nome do produto: <i id="infoNome"> </i></p>
+                        <p>Descrição: <i id="infoDescricao"></i></p>
+                        <p>Valor: <i id="infoValor"></i></p>
+                        <p>Incluido em: <i id="infoData"> </i></p>
+                        <h4></h4>
+                    </div>
+                </section>
+
+            </div>
+        </forms>
+
+        <script src="./index.js"></script>
+    </body>
+</html>
