@@ -2,14 +2,23 @@ const btnIncluir = document.querySelector ("#botaoIncluir")
 const btnListar = document.querySelector("#botaoListar")
 const confirme = document.querySelector ("h3") 
 const confirme2 = document.querySelector ("h4") 
+const nomeTitulo = document.querySelector ("#nomeTitulo")
+const valorTitulo = document.querySelector ("#valorTitulo")
+const buscar = document.querySelector ("#buscar")
+const idTitulo = document.querySelector ("#idTitulo")
 
 let id = 1
-let produtos = [];
+let produtos = []
 
 btnIncluir.addEventListener ("click", incluir)
-btnListar.addEventListener ("click", listar)
-//const nomeTitulo = document.querySelector ("#nomeTitulo")
-//nomeTitulo.addEventListener ("click", ordenarNomes(produtos))
+btnListar.addEventListener ("click", function(){
+    listar(produtos);
+})
+nomeTitulo.addEventListener ("click", ordenarNomes)
+valorTitulo.addEventListener ("click", ordenarValores)
+idTitulo.addEventListener ("click", ordenarID)
+buscar.addEventListener ("click", filtrar)
+
 
 function incluir() {
     // Incluido em:
@@ -64,19 +73,19 @@ function incluir() {
         document.querySelector("#valor").value = ""
         document.querySelector("#descricao").value = ""
 
-        } catch (error) {
-            confirme.textContent = error
-            confirme.style.color = "#ff0000"
-        } 
+    } catch (error) {
+        confirme.textContent = error
+        confirme.style.color = "#ff0000"
+    } 
 }
 
-function listar(){
+function listar(array){
     let tabela = document.querySelector("#tabela")
-    let cont = 0
     tabela.innerHTML = ""
+    confirme.textContent = ""
 
     // Inserindo valores na tabela:
-    while (cont < produtos.length) {
+    for (i=0; i < array.length; i++) {
         let linha = tabela.insertRow();
 
         let colunaId = linha.insertCell();
@@ -85,64 +94,52 @@ function listar(){
         let colunaEditar = linha.insertCell();
         let colunaApagar = linha.insertCell();
         
-        colunaId.innerHTML = produtos[cont].id;
-        colunaNome.textContent = produtos[cont].nome;
-        colunaValor.textContent = `R$ ${produtos[cont].valor}`;
+        colunaId.innerHTML = array[i].id;
+        colunaNome.textContent = array[i].nome;
+        colunaValor.textContent = `R$ ${array[i].valor}`;
 
         let imagemEdit = document.createElement('img')
         imagemEdit.src = './assests/edit.svg'
         colunaEditar.appendChild (imagemEdit)
         imagemEdit.setAttribute("onclick", "abrirPopup()")
-        // imagemEdit.setAttribute("onclick", "editarid("+ JSON.stringify(produtos[cont])+")")
 
         let imagemApagar = document.createElement('img')
         imagemApagar.src = './assests/excluir.png'
         colunaApagar.appendChild (imagemApagar)
-        imagemApagar.setAttribute("onclick", "apagar("+produtos[cont].id+")")
+        imagemApagar.setAttribute("onclick", "apagar("+array[i].id+")")
 
         let btnConfirmar = document.querySelector("#botaoEditar")
-        btnConfirmar.setAttribute("onclick",  "editar("+produtos[cont].id+")")
+        btnConfirmar.setAttribute("onclick",  "editar("+array[i].id+")")
 
          //Popup visualização:
-         colunaNome.setAttribute("onclick", "mostrar("+JSON.stringify(produtos)+", "+produtos[cont].id+")")
+         colunaNome.setAttribute("onclick", "mostrar("+JSON.stringify(array)+", "+array[i].id+")")
          let btnFechar2 = document.querySelector ("#fechar2")
          btnFechar2.setAttribute ("onclick", "fecharpopup2()")
+    }
 
-        cont++;
-        }
-
-        //Popup edição:
-        let btnFechar = document.querySelector ("#fechar")
-        btnFechar.addEventListener ("click", fecharPopup)
-
-        //Ordenar tabela em ordem alfabética:
-        const nomeTitulo = document.querySelector ("#nomeTitulo")
-        nomeTitulo.setAttribute("onclick", "ordenarNomes("+produtos+")")
-
-
-        //nomeTitulo.setAttribute("onclick", "ordenarNomes("+produtos+")")
+    //Popup edição:
+    let btnFechar = document.querySelector ("#fechar")
+    btnFechar.addEventListener ("click", fecharPopup)
 }
 
 function mostrar(produtos, id){
     const btnAbrir = document.querySelector("#popupInfos")
     btnAbrir.style.display = 'block'
 
-    let contadora = 0
     const infoID = document.querySelector("#infoID")
     const infoNome = document.querySelector("#infoNome")
     const infoDescricao = document.querySelector("#infoDescricao")
     const infoValor = document.querySelector("#infoValor")
     const infoData = document.querySelector("#infoData")
 
-    while (contadora < produtos.length) {
-        if(produtos[contadora].id == id){ 
-            infoID.textContent = produtos[contadora].id
-            infoNome.textContent = produtos[contadora].nome
-            infoDescricao.textContent = produtos[contadora].descricao
-            infoValor.textContent = produtos[contadora].valor
-            infoData.textContent = produtos[contadora].incluidoEm
+    for (i=0; i < produtos.length; i++) {
+        if(produtos[i].id == id){ 
+            infoID.textContent = produtos[i].id
+            infoNome.textContent = produtos[i].nome
+            infoDescricao.textContent = produtos[i].descricao
+            infoValor.textContent = produtos[i].valor
+            infoData.textContent = produtos[i].incluidoEm
         }
-        contadora++;
     }
 }
 
@@ -164,51 +161,73 @@ function fecharpopup2(){
 }
 
 function editar(id) {
-    let contadora = 0;
     let nomeEdit = document.querySelector ("#nomeEdit").value
     let descricaoEdit = document.querySelector ("#descricaoEdit").value
     let valorEdit = document.querySelector ("#valorEdit").value
 
-    while (contadora < produtos.length) {
-        if(produtos[contadora].id == id){  
-            produtos[contadora].nome = nomeEdit;
-            produtos[contadora].descricao = descricaoEdit;
-            produtos[contadora].valor = valorEdit;
+    for (i=0; i < produtos.length; i++) {
+        if(produtos[i].id == id){  
+            produtos[i].nome = nomeEdit;
+            produtos[i].descricao = descricaoEdit;
+            produtos[i].valor = valorEdit;
             confirme2.textContent = `Dados alterados com sucesso, atualize a tabela clicando em "Listar produtos"`
             confirme2.style.color = "#00ff00"
         }
-        contadora++;
     } 
 
-    //resetando display após inserção
+    // resetando display após inserção
     document.querySelector ("#nomeEdit").value = ""
     document.querySelector ("#descricaoEdit").value = ""
     document.querySelector ("#valorEdit").value = ""
     fecharPopup();
-    listar();
+    listar(produtos);
 }   
 
 function apagar(id) {
-    let cont2 = 0
-    let novosprodutos = []
-    while (cont2 < produtos.length) {
-        if(produtos[cont2].id != id ){
-            novosprodutos.push(produtos[cont2]);    
+    produtos.forEach((arrayItem,index) => {
+        if(arrayItem.id == id ){
+            produtos.splice(index, 1); 
         }
-        cont2++;
-    }
-    produtos = novosprodutos
-    listar();
+    })
+    listar(produtos);
 }
 
-function ordenarNomes (produtos){
-    alert("teste")
+function ordenarNomes (){
     produtos.sort(function (a, b) {
-      return a.nome.localeCompare(b);
+      return a.nome.localeCompare(b.nome);
     });
-    console.log(produtos)
-    listar();
+    listar(produtos);
 }
 
+function ordenarValores (){
+    produtos.sort(function (a, b) {
+      return a.valor - b.valor
+    });
+    listar(produtos);
+}
 
+function ordenarID (){
+    produtos.sort(function (a, b) {
+      return a.id - b.id
+    });
+    listar(produtos);
+}
 
+function filtrar() {
+    let aux = 0;
+    const inputPesquisa = document.querySelector ("#inputPesquisa").value
+    const msg = document.querySelector ("#msg")
+
+    let novosprodutos = produtos.filter ((valorAtual) => {
+        if ((valorAtual.nome.includes(inputPesquisa)) || (valorAtual.descricao.includes(inputPesquisa))){
+            aux++;
+            msg.textContent = `Foram encontrado(s) ${aux} produtos`
+            msg.style.color = "#00ff00"
+            return true
+        } else if (aux==0) {
+            msg.textContent = `Não foram encontrados produtos conforme chave de pesquisa!`
+            msg.style.color = "#ff0000"
+        }
+    })
+    listar(novosprodutos);
+}

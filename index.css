@@ -85,7 +85,7 @@ textarea {
 }
 
 #valor {
-    width: 4vw;
+    width: 6vw;
 }
 
 textarea::placeholder {
@@ -289,5 +289,31 @@ h3 {
 }
 
 #botaoEditar:hover {
+    box-shadow: 0 0 40px 0 #3498db inset, 0 0 10px 4px #3498db;
+}
+
+#containerPesquisa {
+    display: flex;
+    gap: 10px;
+}
+
+#inputPesquisa {
+    width: 10vw;
+}
+
+#buscar{
+    border-radius: 3em;
+    padding: 7px;
+    border-color: #ffffff;
+    color: #fff;
+    box-shadow: 0 0 40px 40px #187e26 inset;
+    -webkit-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+#buscar:hover {
     box-shadow: 0 0 40px 0 #3498db inset, 0 0 10px 4px #3498db;
 }
